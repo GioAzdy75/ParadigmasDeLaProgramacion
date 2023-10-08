@@ -20,3 +20,14 @@ pertenece(X,[_|Resto]) :- pertenece(X,Resto).
 % lista obtenida escribiendo los elementos de L2 a continuación de los elementos de L1.
 concatena([],L2,L2).
 concatena([Cabeza|Resto],L2,K_1) :- concatena(Resto,L2,K) , K_1 = [Cabeza|K].
+
+%6- Un palíndromo es una palabra que se lee igual en los dos sentidos, por ejemplo “oso”. Definir
+% la relación palíndromo(L) que verifique si la lista L es un palíndromo.
+invertir_lista([],[]).
+invertir_lista([Cabeza|Resto],K_1) :- invertir_lista(Resto,K), append(K,[Cabeza],K_1).
+palindromo(L1) :- invertir_lista(L1,L2) , L1 = L2. 
+
+%7- Definir la relación último(X,L) (equivalente a last) que verifique si X es el último elemento
+% de la lista L.
+ultimo(X,[X]).
+ultimo(X,[_|Resto]) :- ultimo(X,Resto),!.
