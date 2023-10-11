@@ -49,8 +49,32 @@ subconjunto([X|L1],L2) :- member(X,L2),subconjunto(L1,L2).
 %11- Definir la relación maximo(X,Y,Z) (equivalente a max) que verifique si Z es el maximo de
 % X e Y
 maximo(X,Y,Z) :- X > Y , Z = X ,!.
-maximo(X,Y,Z) :- Z = Y.
+maximo(X,Y,Z) :- Y > X , Z = Y.
 
 %12-  Definir la relación mcd(X,Y,Z) que verifique si Z es el maximo común divisor de X e Y.
 mcd(X,0,X) :- X > 0.
 mcd(X,Y,Z) :- Y > 0, Resto is X mod Y , mcd(Y,Resto,Z).
+
+%13- Definir la relación longitud(L,N) que se verifique si N es la longitud de la lista L.
+longitud([],0).
+longitud([_|Resto],N1)  :-  longitud(Resto,N), N1 is N + 1.
+
+%14- Una lista está acotada si todos sus elementos son menores que su longitud. Definir la
+% relación lista_acotada(L) que verifique si todos los elementos de la lista de números L son
+% menores que la longitud de L. (usar length/2)
+
+recorrer_lista([],_).
+recorrer_lista([Cabeza|Resto],N) :- recorrer_lista(Resto,N) , Cabeza =< N.
+lista_acotada(L) :- length(L,Length) , recorrer_lista(L,Length).
+
+%15- Definir la relación max_lista(L,X) que se verifique si X es el maximo de la lista de números L.
+recorrer_lista_max([],_).
+recorrer_lista_max([Cabeza|Resto],N) :- recorrer_lista_max(Resto,N) , maximo(Cabeza,N,N).
+max_lista(L,N) :- recorrer_lista_max(L,N).
+
+%16. Definir la relación suma_lista(L,X) (equivalente a sumlist) que se verifique si X es la suma
+% de los elementos de la lista de números L.
+
+suma_lista([Cabeza],Cabeza).
+suma_lista([Cabeza|Resto],X_1) :- suma_lista(Resto,X) , X_1 is Cabeza + X , !.
+
