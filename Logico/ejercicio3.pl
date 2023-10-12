@@ -72,9 +72,26 @@ recorrer_lista_max([],_).
 recorrer_lista_max([Cabeza|Resto],N) :- recorrer_lista_max(Resto,N) , maximo(Cabeza,N,N).
 max_lista(L,N) :- recorrer_lista_max(L,N).
 
-%16. Definir la relación suma_lista(L,X) (equivalente a sumlist) que se verifique si X es la suma
+%16- Definir la relación suma_lista(L,X) (equivalente a sumlist) que se verifique si X es la suma
 % de los elementos de la lista de números L.
-
 suma_lista([Cabeza],Cabeza).
 suma_lista([Cabeza|Resto],X_1) :- suma_lista(Resto,X) , X_1 is Cabeza + X , !.
 
+%17- Definir la relación ordenada(L) que se verifique si la lista de números L está ordenada de manera creciente.
+ordenada([_]) :- !.
+ordenada([Cabeza1,Cabeza2|Resto]) :- Cabeza1 =< Cabeza2 , ordenada([Cabeza2|Resto]). 
+
+%18. Definir la relación lista(N,L) que verifique si L es la lista de longitud N cuyos elementos son N.
+lista(_,[]) :- !.
+lista(N,[Cabeza|Resto]) :- Cabeza = N , lista(N,Resto).
+
+%19. Definir la relación lista_de_números(N,M,L) (equivalente a numlist) que verifica si L es
+% la lista de los números desde N hasta M, ambos inclusive.
+
+crearListaNumeros(N,0,[N]).
+crearListaNumeros(N,Largo,Lista_NM) :- G is Largo - 1 , crearListaNumeros(N,G,Z) ,H is N + Largo , append(Z,[H],Lista_NM).
+lista_de_números(N,M,L) :- LengthLista is M - N , crearListaNumeros(N,LengthLista,L).
+
+% 20. Definir la relación entre(N1,N2,X) (equivalente a between) que se verifique si X es un
+%número entero tal que N1 ≤ X ≤ N2.
+entre(N1,N2,X) :- N1 =< X , X =< N2.
