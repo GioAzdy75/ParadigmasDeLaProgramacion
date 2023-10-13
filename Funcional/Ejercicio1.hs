@@ -38,11 +38,26 @@ maximo6Numeros a b c d e f = max (maximo3Numeros a b c) (maximo3Numeros d e f)
 -- J. Definir una función tal que reciba un par (x, y) y retorne el cuadrante, puede informar mediante
 --mensaje o devolviendo el número de cuadrante. El par no esta sobre los ejes x ni y.
 
--- K. La función igualesT res verifica que tres elementos x, y y z son iguales.
+-- K. La función igualesTres verifica que tres elementos x, y y z son iguales.
 igualesTres :: Eq a => a -> a -> a -> Bool
 igualesTres a b c = a == b && b == c
 -- igualesTres a b c = (a == b) == c # Porque Error? :Rta (a==b) devuelve un Bool y luego con el otro == estamos comparando un bool con un Num y da error
 
+-- L. La función diferentesTres verifica que tres elementos x, y y z son diferentes.
+diferentesTres :: Eq a => a -> a -> a -> Bool
+diferentesTres a b c = a /= b && a /= c && b/= c
+
+-- M. La función igualesCuatro verifica que tres elementos v, x, y y z son iguales utilizando la función definida en el punto D.
+igualesCuatro :: Eq a => a -> a -> a -> a -> Bool
+igualesCuatro a b c d = igualesTres a b c  && igualesTres d b c
+
+-- N. Definir las raíces de una ecuación de segundo grado
+
+-- Ñ. Determinar si un año es bisiesto
+
+-- O. Definir el operador XOR
+xor :: Eq a => a -> a -> Bool
+xor a b = a /= b
 
 
 
