@@ -54,3 +54,28 @@ nIndex n (x : xs)
 -- H. Redefinir la función elem tal que elem e l se verifica si e es un elemento de l.
 elementoLista :: Eq a => a -> [a] -> Bool
 elementoLista e (x : xs) = (e == x) || elementoLista e xs
+
+
+-- Ñ. Crear una lista que contenga todos los enteros dentro de un rango dado
+crearListaRango :: Int -> Int -> [Int]
+crearListaRango n m
+    | n<0 && m<0 = error "Indice Invalido"
+    | n > m = error "Indice Invalido"
+    | otherwise = [x | x <- [n..m]]
+
+-- O. Generar las combinaciones de K objetos distintos elegidos de los N elementos de una lista
+
+-- P. mapToSucesor: dada una lista de enteros, devuelve la lista de los sucesores de cada entero.
+mapToSucesor :: [Int] -> [Int]
+mapToSucesor [] = []
+mapToSucesor xs = [succ x | x <- xs]
+
+-- Q. filtrarPositivos: dada una lista de enteros, devuelve una lista con los elementos que son positivos.
+filtrarPositivos :: [Int] -> [Int]
+filtrarPositivos [] = []
+filtrarPositivos xs = [x | x <- xs , x > 0]
+
+-- R. reversa’: dada una lista de enteros, devuelve la lista con los mismos elementos de atrás para adelante.
+reversa :: [Int] -> [Int]
+reversa [] = []
+reversa (x:xs) = reversa xs ++ [x]
