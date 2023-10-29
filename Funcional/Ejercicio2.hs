@@ -102,8 +102,6 @@ permutaciones :: Eq a => [a] -> [[a]]
 permutaciones [] = [[]]
 permutaciones xs = [x : p | x <- xs, p <- permutaciones (filter (/= x) xs)]
 
-
-
 -- Ñ. Crear una lista que contenga todos los enteros dentro de un rango dado
 crearListaRango :: Int -> Int -> [Int]
 crearListaRango n m
