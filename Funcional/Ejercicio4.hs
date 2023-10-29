@@ -55,7 +55,32 @@ pares (x:xs)
             | otherwise = pares xs
 
 -- K. letras, que dada una lista de caracteres, devuelve la lista de aquellos que son letras (minúsculas o mayúsculas)
+esLetra :: Char -> Bool
+esLetra c = isUpper c || isLower c
+  where
+    isUpper x = x >= 'A' && x <= 'Z'
+    isLower x = x >= 'a' && x <= 'z'
+
 letras :: [Char] -> [Char]
 letras [] = []
+letras (x:xs)
+    | esLetra x = x : letras xs
+    | otherwise = letras xs
 
 -- L. masDe, que dada una lista de listas xs y un número n, devuelve la lista de aquellas listas de xs con longitud mayor que n
+masDe :: [[a]] -> Int -> [[a]]
+masDe [] n = []
+masDe _ 0 = []
+masDe (x:xs) n 
+            | length x > n = x : masDe xs n
+            | otherwise = masDe xs n
+
+-- M. Definición de un operador que aplica una lista de funciones a un entero y devuelve la lista de enteros de los resultados.
+
+-- N. Definir la función deEnteroACadena tal que deEnteroACadena n es la cadena correspondiente al número entero n.
+
+{- Ñ. Definir una función que devuelva la posición inicial de una sublista en una lista dada. Por ejemplo:
+ghci> findList [1] [4,5,1,2,5,1]
+2 --resultado, recordar que empieza desde 0 una lista
+ghci>findList [7] [4,5,1,2,5,1] Nothing –resultado, puede definir su propio tipo para devolver resultados
+-}
