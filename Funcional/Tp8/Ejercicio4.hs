@@ -77,7 +77,28 @@ masDe (x:xs) n
 
 -- M. Definición de un operador que aplica una lista de funciones a un entero y devuelve la lista de enteros de los resultados.
 
--- N. Definir la función deEnteroACadena tal que deEnteroACadena n es la cadena correspondiente al número entero n.
+aplicacionListaFunciones :: [Int -> Int] -> Int -> [Int]
+aplicacionListaFunciones [] _ = []
+aplicacionListaFunciones (f : fs) x = (f x) : (aplicacionListaFunciones fs x)
+
+aplicacionFuncionesaListas :: [Int -> Int] -> [Int] -> [Int]
+aplicacionFuncionesaListas _ [] = []
+aplicacionFuncionesaListas fs (x:xs) = (aplicacionListaFunciones fs x) ++ aplicacionFuncionesaListas fs xs
+
+
+-- N. Definir la función deEnteroACadena tal que deEnteroACadena n es la cadena correspondiente al número entero n
+deEnteroACadena :: Int -> String
+deEnteroACadena n
+  | n < 0     = "-" ++ show (-n)
+  | n == 0    = "0"
+  | otherwise = show n
+
+{-
+deEnteroACadena :: Int -> String
+deEnteroACadena n = show n
+-}
+
+
 
 {- Ñ. Definir una función que devuelva la posición inicial de una sublista en una lista dada. Por ejemplo:
 ghci> findList [1] [4,5,1,2,5,1]

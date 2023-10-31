@@ -72,11 +72,11 @@ pizzas = [ Pizza ["tomate", "queso"] 150.0
 -- incluidas en segmento más largo de la lista con las personas que nacieron antes dicha fecha.
 
 
--- G. Definir una función que permita indicar que nota saco el alumno en base al número obtenido en el parcial.
+{- G. Definir una función que permita indicar que nota saco el alumno en base al número obtenido en el parcial.
 -- a) Utilice una función con guardas
 -- b) Utilice una función con patrones
 -- c) Utilice un tipo de datos definidos por el usuario con las notas que es posible sacarse. Utilizarlo en el ejercicio
-
+-}
 
 {-
 H. En Geometría euclidiana plana recibe el nombre de cuadrante cada una de las cuatro regiones infinitas
