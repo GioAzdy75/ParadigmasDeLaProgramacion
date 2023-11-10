@@ -163,6 +163,24 @@ mayus c ((p1,p2) : ps)
 es_minus :: Char -> Bool
 es_minus c =  elem c ['a'..'z']
 
+es_mayus :: Char -> Bool
+es_mayus c =  elem c ['A'..'Z']
+
+
+palabraMinuscula :: String -> String
+palabraMinuscula [] = []
+palabraMinuscula (p:ps)
+                        | es_mayus p = minus p tuplaAbecedario : palabraMinuscula ps
+                        | otherwise = p : palabraMinuscula ps
+
+correcionLetraPalabra :: String -> String
+correcionLetraPalabra (p:ps)
+                            | length (p:ps) >= 4 = mayus p tuplaAbecedario :ps
+                            | otherwise = (p:ps) 
+
+titulo :: [String] -> [String]
+titulo ((h:hs):xss) = [ mayus h tuplaAbecedario : palabraMinuscula hs] ++ [correcionLetraPalabra (palabraMinuscula x) | x <- xss]
+
 {-
 M. La criba de Erastótenes es un método para calcular números primos.
 Se comienza escribiendo todos los números desde 2 hasta (supongamos) 100.
@@ -174,7 +192,11 @@ El primero de los números restantes (el 5) también es primo . . . y así suces
 Cuando no quedan números, se han encontrado todos los números primos en el rango fijado.
 Definir la función cribaErastotenes que permita calcular los números primos hasta el valor n.
 -}
-
+cribaErastotenes :: Int -> [Int]
+cribaErastotenes n = sieve [2..n]
+  where
+    sieve [] = []
+    sieve (x:xs) = x : sieve [y | y <- xs, y `mod` x /= 0]
 
 --Ejercicio 1.3. Teniendo en cuenta la definición de la función predefinida foldr, redefinir la suma y el producto
 
@@ -189,3 +211,90 @@ mult' xs = foldr (*) 1 xs
 
 mult'' :: [Int] -> Int
 mult'' xs = foldr1 (+) xs
+
+
+{-
+Ejercicio 1.4. Teniendo en cuenta las siguientes funciones predefinidas en Haskell
+map :: (a -> b) -> [a] -> [b]
+filter :: (a -> Bool) -> [a] -> [a]
+takeWhile :: (a -> Bool) -> [a] -> [a]
+dropWhile :: (a -> Bool) -> [a] -> [a]
+iterate :: (a -> a) -> a -> [a]
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+Definir las siguientes funciones de alto orden:
+Da el número de elementos alineados en dos listas.
+
+
+
+-}
+
+--A Da el número de elementos alineados en dos listas.
+
+--B Crea una función que toma una lista y otra función como entrada, aplicar esa función a cada elemento de esa lista y devolver la nueva lista.
+map' :: (a->b) -> [a] -> [b]
+map' _ [] = []
+map' f (x: xs) = f x : (map' f xs) 
+--C Filtrar los números de una lista que sean menores a 5
+filtraMenores5 :: [Int] -> [Int]
+filtraMenores5 xs = filter (<5) xs
+--D Crear una función que multiplique todos los elementos mayores a 0 × 2
+
+
+{-
+Ejercicio 1.5. Implementar las soluciones para los siguientes problemas mediante uso de orden superior:
+-}
+
+-- A. Definir la función de orden superior dosV eces tal que repita una función y un argumento dos veces.
+dosVeces :: (a->a) -> [a] -> [a]
+dosVeces f xs = map f (map f xs)
+
+{-
+B. Definir la función que imprima cada elemento de una matriz de forma en espiral transversal hacia el centro de la matriz.
+Por ejemplo, ruta de impresión de una matriz 3 × 3 como el de la imagen da como resultado
+espiral [[1,2,3],[4,5,6],[7,8,9]]
+1,2,3,6,9,8,7,4,5.
+-}
+transpose :: [[Int]] -> [[Int]]
+transpose [] = []
+transpose ([]:_) = []
+transpose x = (map head x) : transpose (map tail x)
+
+espiralTransversal :: [[Int]] -> [Int]
+espiralTransversal [] = []
+espiralTransversal (m:ms) = m ++ espiralTransversal (reverse (transpose ms))
+{-
+matrixSpiral i j s
+    | i == 0 = [[]]
+    | otherwise = [s .. s+j-1] : (map reverse . transpose)  (matrixSpiral j (i-1) (s+j))
+-}
+
+
+{-
+En los documentos financieros, como los cheques, los números a veces se deben escribir con palabras
+completas. Ejemplo: 175 debe ser escrito como uno-siete-cinco. Escriba un predicado full-words/1
+para imprimir números enteros (no negativos) en palabras completas.
+-}
+
+intToList :: Int -> [Int]
+intToList 0 = [0]  -- Caso base: si el número es 0, la lista es [0]
+intToList n = intToList' n []  -- Llama a una función auxiliar con una lista vacía
+
+intToList' :: Int -> [Int] -> [Int]
+intToList' 0 acc = acc  -- Cuando el número llega a 0, devuelve la lista acumulada
+intToList' n acc = intToList' (n `div` 10) (n `mod` 10 : acc)  -- Divide n por 10 y agrega el dígito más bajo a la lista acumulada
+
+numeroLetra :: [(Int,String)]
+numeroLetra = zip [0..] ["Cero","Uno","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve"]
+
+buscarNumeroaLetra :: Int -> [(Int,String)] -> String
+buscarNumeroaLetra x ((y1,y2):ys)
+                                | x == y1 = y2
+                                | otherwise = buscarNumeroaLetra x ys
+
+                         
+asociarNumeroLetra :: [Int] -> String
+asociarNumeroLetra [] = ""
+asociarNumeroLetra (x:xs) = buscarNumeroaLetra x numeroLetra ++ "-" ++ asociarNumeroLetra xs
+
+fullWords :: Int -> String
+fullWords x = asociarNumeroLetra (intToList x) 
